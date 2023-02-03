@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for a simple Python crud application
+Globals:
+  Function:
+    Timeout: 60
+
+Parameters:
+  Table:
+    Type: String
+    Default: Activities
+  Region:
+    Type: String
+    Default: eu-west-1
+  AWSEnv:
+    Type: String
+    Default: AWS
+
+Resources:
+  GetBikesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/GetBikes/
+      Handler: webservice.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          TABLE: "ActivitiesTable"
+          REGION: !Ref Region
+          AWSENV: !Ref AWSEnv
+      Events:
+        CreateActivities:
+          Type: Api
+          Properties:
+            Path: /bikes/{vin}
+            Method: get
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "ActivitiesTable"
+
+  BikesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "vin"
+          AttributeType: "S"
+        -
+          AttributeName: "brand"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "vin"
+          KeyType: "HASH"
+        -
+          AttributeName: "brand"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+      TableName: "Bikes"
+    
+  CarsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "vin"
+          AttributeType: "S"
+        -
+          AttributeName: "brand"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "vin"
+          KeyType: "HASH"
+        -
+          AttributeName: "brand"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+      TableName: "Cars"
+
+Outputs:
+  GetBikesFunction:
+    Description: "GetBikes Lambda Function ARN"
+    Value: !GetAtt GetBikesFunction.Arn
+  GetBikesFunctionIamRole:
+    Description: "IAM Role created for GetBikes function"
+    Value: !GetAtt GetBikesFunctionRole.Arn
