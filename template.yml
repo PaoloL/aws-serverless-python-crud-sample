@@ -35,6 +35,26 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"
+  PutBikesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/PutBikes/
+      Handler: webservice.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          TABLE: "Bikes"
+          REGION: !Ref Region
+          AWSENV: !Ref AWSEnv
+      Events:
+        CreateActivities:
+          Type: Api
+          Properties:
+            Path: /bikes/
+            Method: put
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "Bikes"
 
   BikesTable:
     Type: AWS::DynamoDB::Table
