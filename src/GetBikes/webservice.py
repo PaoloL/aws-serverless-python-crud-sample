@@ -16,7 +16,7 @@ def lambda_handler(message, context):
             'body': json.dumps({'msg': 'Bad Request'})
         }
 
-    table_name = os.environ.get('TABLE', 'Bikes')
+    table_name = os.environ.get('TABLE')
     region = os.environ.get('REGION', 'eu-west-1')
     aws_environment = os.environ.get('AWSENV', 'AWS')
 

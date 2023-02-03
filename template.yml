@@ -7,9 +7,6 @@ Globals:
     Timeout: 60
 
 Parameters:
-  Table:
-    Type: String
-    Default: Activities
   Region:
     Type: String
     Default: eu-west-1
@@ -26,7 +23,7 @@ Resources:
       Runtime: python3.8
       Environment:
         Variables:
-          TABLE: "ActivitiesTable"
+          TABLE: "Bikes"
           REGION: !Ref Region
           AWSENV: !Ref AWSEnv
       Events:
@@ -37,7 +34,7 @@ Resources:
             Method: get
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: "ActivitiesTable"
+            TableName: "Bikes"
 
   BikesTable:
     Type: AWS::DynamoDB::Table

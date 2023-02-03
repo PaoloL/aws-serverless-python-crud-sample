@@ -8,5 +8,5 @@ s3_prefix = "sam-python-crud-sample"
 region = "eu-west-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_NAMED_IAM"
-parameter_overrides = "Table=\"Activities\" Region=\"eu-west-1\" AWSEnv=\"AWS\""
+parameter_overrides = "Table=\"Bikes\" Region=\"eu-west-1\" AWSEnv=\"AWS\""
 image_repositories = []
