@@ -35,6 +35,7 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"
+  
   PutBikesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -50,8 +51,29 @@ Resources:
         CreateActivities:
           Type: Api
           Properties:
-            Path: /bikes/
+            Path: /bikes/{vin}
             Method: put
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: "Bikes"
+
+  PostBikesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/PostBikes/
+      Handler: webservice.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          TABLE: "Bikes"
+          REGION: !Ref Region
+          AWSENV: !Ref AWSEnv
+      Events:
+        CreateActivities:
+          Type: Api
+          Properties:
+            Path: /bikes
+            Method: post
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"

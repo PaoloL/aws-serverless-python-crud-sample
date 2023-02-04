@@ -13,7 +13,8 @@
     ]
   },
   "pathParameters": {
-    "proxy": "/bikes"
+    "proxy": "/bikes",
+    "vin" : "123"
   },
   "stageVariables": {
     "baz": "qux"

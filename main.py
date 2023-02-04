@@ -15,3 +15,9 @@ if __name__ == "__main__":
     event = json.load(post_event_file)
     context = []
     post.lambda_handler(event, context)
+
+    print("Simulate PUT Bikes")
+    post_event_file = open('events/put_bikes.json')
+    event = json.load(post_event_file)
+    context = []
+    put.lambda_handler(event, context)
