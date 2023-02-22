@@ -35,6 +35,10 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"
+      Tracing: Active
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Type: Canary10Percent10Minutes
   
   PutBikesFunction:
     Type: AWS::Serverless::Function
@@ -56,6 +60,8 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"
+      Tracing: Active
+      AutoPublishAlias: live
 
   PostBikesFunction:
     Type: AWS::Serverless::Function
@@ -77,6 +83,8 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: "Bikes"
+      Tracing: Active
+      AutoPublishAlias: live
 
   BikesTable:
     Type: AWS::DynamoDB::Table
